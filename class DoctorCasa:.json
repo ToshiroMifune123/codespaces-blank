@@ -1,0 +1,1486 @@
+class DoctorCasa:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Doctor Casa")
+
+        # Añadir una imagen de un médico desgreñado y con cara gruñona
+        self.doctor_image = tk.PhotoImage(file="doctor_image.png")
+        self.doctor_label = tk.Label(self.root, image=self.doctor_image)
+        self.doctor_label.pack()
+
+        case_database = {
+
+{
+ "patients": [
+ {
+ "name": "María Pérez",
+ "age": 45,
+ "gender": "Femenino",
+ "occupation": "Profesora",
+ "symptoms": "Siente una presión en su cabeza que no la deja concentrarse en sus clases. A veces, cuando sube las escaleras, tiene que detenerse a mitad de camino porque su corazón late muy rápido y le falta el aire. Le gusta añadir sal extra a sus comidas, aunque sabe que no debería.",
+ "diagnosis": "Hipertensión arterial",
+ "treatment": "Medicamentos antihipertensivos, cambios en el estilo de vida",
+ "pathology_description": {
+ "name": "Hipertensión arterial",
+ "etiology": "La hipertensión arterial puede ser causada por varios factores, incluyendo el estrés, la dieta alta en sodio, la falta de ejercicio y factores genéticos.",
+ "common_symptoms": ["Presión arterial alta", "Dolor de cabeza", "Fatiga"],
+ "rare_symptoms": ["Dificultad para respirar", "Sangrado nasal frecuente"],
+ "treatment": "El tratamiento de la hipertensión arterial generalmente implica medicamentos para reducir la presión arterial, como los inhibidores de la enzima convertidora de angiotensina (IECA) o los bloqueadores de los receptores de angiotensina II (BRA), así como cambios en el estilo de vida, como una dieta baja en sodio y ejercicio regular.",
+ "treatment_effect": "El tratamiento puede ayudar a reducir la presión arterial y disminuir el riesgo de complicaciones cardiovasculares, como ataques cardíacos y accidentes cerebrovasculares.",
+ "treatment_mechanism": "Los medicamentos antihipertensivos funcionan dilatando los vasos sanguíneos para reducir la resistencia vascular y disminuir la presión arterial. Los cambios en el estilo de vida, como la dieta y el ejercicio, pueden ayudar a mejorar la salud cardiovascular y reducir la presión arterial."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Migraña",
+ "treatment": "Analgésicos específicos para migraña, cambios en el estilo de vida"
+ },
+ {
+ "diagnosis": "Insomnio",
+ "treatment": "Terapia cognitivo-conductual, medicamentos hipnóticos"
+ }
+ ]
+ },
+ {
+ "name": "José Rodríguez",
+ "age": 60,
+ "gender": "Masculino",
+ "occupation": "Ingeniero",
+ "symptoms": "Ha notado que sus gafas ya no le sirven como antes. Ve borroso y tiene que pedirle a su esposa que le lea las etiquetas de los alimentos. Además, se siente cansado todo el tiempo, incluso después de dormir bien. Le encanta el dulce de leche que hace su hija, aunque últimamente se siente culpable cada vez que lo come.",
+ "diagnosis": "Cataratas",
+ "treatment": "Cirugía de cataratas",
+ "pathology_description": {
+ "name": "Cataratas",
+ "etiology": "Las cataratas se desarrollan cuando las proteínas en el cristalino del ojo comienzan a aglutinarse, formando áreas nubladas en el cristalino que interfieren con la visión.",
+ "common_symptoms": ["Visión borrosa", "Dificultad para ver en condiciones de poca luz"],
+ "rare_symptoms": ["Cambios en la percepción del color", "Visión doble"],
+ "treatment": "La cirugía de cataratas implica la extracción del cristalino opaco y su reemplazo por una lente artificial.",
+ "treatment_effect": "La cirugía de cataratas generalmente mejora significativamente la visión y puede restaurar la calidad de vida del paciente.",
+ "treatment_mechanism": "Durante la cirugía de cataratas, el cristalino opaco se fragmenta y se elimina del ojo, y luego se implanta una lente artificial en su lugar para restaurar la visión."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Glaucoma",
+ "treatment": "Gotas para los ojos para reducir la presión intraocular, cirugía láser"
+ },
+ {
+ "diagnosis": "Degeneración macular",
+ "treatment": "Suplementos vitamínicos, inyecciones intraoculares"
+ }
+ ]
+ },
+ {
+ "name": "Carlos González",
+ "age": 30,
+ "gender": "Masculino",
+ "occupation": "Chef",
+ "symptoms": "Ha notado una erupción en su piel que le pica intensamente. Además, ha experimentado dolor abdominal y diarrea después de comer ciertos alimentos. Últimamente se ha sentido muy cansado, incluso después de dormir lo suficiente.",
+ "diagnosis": "Intolerancia alimentaria",
+ "treatment": "Eliminación de los alimentos desencadenantes, dieta específica",
+ "pathology_description": {
+ "name": "Intolerancia alimentaria",
+ "etiology": "La intolerancia alimentaria puede deberse a la incapacidad del cuerpo para digerir ciertos alimentos o componentes de los alimentos, como la lactosa o el gluten.",
+ "common_symptoms": ["Erupción cutánea", "Dolor abdominal", "Diarrea"],
+ "rare_symptoms": ["Fatiga crónica", "Dolor en las articulaciones"],
+ "treatment": "El tratamiento de la intolerancia alimentaria generalmente implica evitar los alimentos que desencadenan los síntomas y seguir una dieta específica.",
+ "treatment_effect": "Eliminar los alimentos desencadenantes puede aliviar los síntomas y mejorar la calidad de vida del paciente.",
+ "treatment_mechanism": "Evitar los alimentos que desencadenan los síntomas permite que el sistema digestivo se recupere y reduce la inflamación, aliviando así los síntomas de la intolerancia alimentaria."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Dermatitis atópica",
+ "treatment": "Hidratantes para la piel, corticosteroides tópicos"
+ },
+ {
+ "diagnosis": "Síndrome del intestino irritable",
+ "treatment": "Cambios en la dieta, medicamentos para aliviar los síntomas"
+ }
+ ]
+ },
+ {
+ "name": "Luisa Martínez",
+ "age": 28,
+ "gender": "Femenino",
+ "occupation": "Ingeniera de software",
+ "symptoms": "Experimenta dolor y rigidez en las articulaciones, especialmente por la mañana. Ha notado hinchazón en varias articulaciones y tiene dificultad para moverse. Además, se siente constantemente cansada y deprimida.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Medicamentos antiinflamatorios, fisioterapia, cambios en la dieta",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune que causa inflamación en las articulaciones y puede afectar otros órganos del cuerpo.",
+ "common_symptoms": ["Dolor articular", "Rigidez matutina", "Hinchazón en las articulaciones"],
+ "rare_symptoms": ["Fatiga crónica", "Depresión"],
+ "treatment": "El tratamiento de la artritis reumatoide puede incluir medicamentos antiinflamatorios para reducir la inflamación y el dolor, fisioterapia para mejorar la movilidad articular y cambios en la dieta para reducir la inflamación.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas de la artritis reumatoide y prevenir el daño articular a largo plazo.",
+ "treatment_mechanism": "Los medicamentos antiinflamatorios reducen la inflamación en las articulaciones, lo que ayuda a aliviar el dolor y la rigidez. La fisioterapia puede mejorar la movilidad articular y fortalecer los músculos circundantes."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Medicamentos analgésicos, terapia ocupacional"
+ },
+ {
+ "diagnosis": "Fibromialgia",
+ "treatment": "Medicamentos para el dolor, terapia cognitivo-conductual"
+ }
+ ]
+ },
+ {
+ "name": "Eduardo Sánchez",
+ "age": 50,
+ "gender": "Masculino",
+ "occupation": "Mecánico",
+ "symptoms": "Tiene dificultad para respirar, especialmente después de realizar actividades físicas. Ha experimentado episodios de tos persistente y producción de esputo. Además, ha notado hinchazón en sus piernas y tobillos.",
+ "diagnosis": "EPOC",
+ "treatment": "Broncodilatadores, terapia de oxígeno, dejar de fumar",
+ "pathology_description": {
+ "name": "Enfermedad pulmonar obstructiva crónica (EPOC)",
+ "etiology": "La EPOC es una enfermedad pulmonar crónica que se caracteriza por la obstrucción del flujo de aire en los pulmones, generalmente causada por el tabaquismo.",
+ "common_symptoms": ["Dificultad para respirar", "Tos persistente", "Producción de esputo"],
+ "rare_symptoms": ["Hinchazón en las piernas y tobillos", "Fatiga"],
+ "treatment": "El tratamiento de la EPOC puede incluir broncodilatadores para abrir las vías respiratorias, terapia de oxígeno para mejorar la oxigenación y dejar de fumar para prevenir un mayor daño pulmonar.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas de la EPOC y mejorar la calidad de vida del paciente, aunque la enfermedad es crónica y progresiva.",
+ "treatment_mechanism": "Los broncodilatadores ayudan a relajar los músculos de las vías respiratorias, lo que facilita la respiración. La terapia de oxígeno proporciona oxígeno adicional para mejorar la oxigenación de la sangre."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Asma",
+ "treatment": "Inhaladores de corticosteroides, broncodilatadores de acción rápida"
+ },
+ {
+ "diagnosis": "Neumonía",
+ "treatment": "Antibióticos, reposo en cama"
+ }
+ ]
+ },
+ {
+ "name": "Laura Gómez",
+ "age": 38,
+ "gender": "Femenino",
+ "occupation": "Diseñadora gráfica",
+ "symptoms": "Ha experimentado episodios de mareos repentinos y sensación de desmayo. Se siente débil y fatigada, especialmente después de realizar actividades físicas. Ha notado un ritmo cardíaco rápido e irregular en ocasiones.",
+ "diagnosis": "Arritmia cardíaca",
+ "treatment": "Medicamentos antiarrítmicos, cardioversión eléctrica, ablación por catéter",
+ "pathology_description": {
+ "name": "Arritmia cardíaca",
+ "etiology": "Las arritmias cardíacas pueden ser causadas por varios factores, incluyendo enfermedades cardíacas subyacentes, anomalías eléctricas en el corazón y factores externos como el estrés o el consumo de cafeína.",
+ "common_symptoms": ["Mareos", "Fatiga", "Palpitaciones cardíacas"],
+ "rare_symptoms": ["Desmayos", "Dolor en el pecho"],
+ "treatment": "El tratamiento de las arritmias cardíacas puede incluir medicamentos antiarrítmicos para regular el ritmo cardíaco, cardioversión eléctrica para restaurar el ritmo normal del corazón y ablación por catéter para corregir las anomalías eléctricas.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar las arritmias cardíacas y prevenir complicaciones graves, como accidentes cerebrovasculares o ataques cardíacos.",
+ "treatment_mechanism": "Los medicamentos antiarrítmicos actúan sobre el sistema eléctrico del corazón para regular el ritmo cardíaco. La cardioversión eléctrica utiliza descargas eléctricas controladas para restablecer un ritmo cardíaco normal."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Ansiedad",
+ "treatment": "Terapia cognitivo-conductual, medicamentos ansiolíticos"
+ },
+ {
+ "diagnosis": "Hipertiroidismo",
+ "treatment": "Medicamentos antitiroideos, yodo radioactivo"
+ }
+ ]
+ },
+ {
+ "name": "Javier Torres",
+ "age": 42,
+ "gender": "Masculino",
+ "occupation": "Abogado",
+ "symptoms": "Ha notado un aumento repentino de peso, especialmente alrededor de su abdomen. Experimenta fatiga, debilidad muscular y estreñimiento frecuente. Además, se siente constantemente frío, incluso en climas cálidos.",
+ "diagnosis": "Hipotiroidismo",
+ "treatment": "Hormona tiroidea sintética (levotiroxina)",
+ "pathology_description": {
+ "name": "Hipotiroidismo",
+ "etiology": "El hipotiroidismo puede ser causado por una disminución en la producción de hormonas tiroideas por la glándula tiroides, generalmente debido a enfermedades autoinmunes, cirugía tiroidea o deficiencias nutricionales.",
+ "common_symptoms": ["Aumento de peso", "Fatiga", "Estreñimiento"],
+ "rare_symptoms": ["Frío constante", "Debilidad muscular"],
+ "treatment": "El tratamiento del hipotiroidismo implica la reposición de las hormonas tiroideas con levotiroxina, una hormona tiroidea sintética.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas del hipotiroidismo y restaurar la función metabólica normal del cuerpo.",
+ "treatment_mechanism": "La levotiroxina reemplaza las hormonas tiroideas deficientes en el cuerpo, lo que ayuda a restaurar el equilibrio hormonal y mejorar los síntomas del hipotiroidismo."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Depresión",
+ "treatment": "Terapia cognitivo-conductual, antidepresivos"
+ },
+ {
+ "diagnosis": "Obesidad",
+ "treatment": "Dieta y ejercicio, medicamentos para perder peso"
+ }
+ ]
+ },
+ {
+ "name": "Ana López",
+ "age": 35,
+ "gender": "Femenino",
+ "occupation": "Médica",
+ "symptoms": "Ha experimentado dolor y rigidez en las articulaciones, especialmente por la mañana. Ha notado hinchazón en varias articulaciones y tiene dificultad para moverse. Además, se siente constantemente cansada y deprimida.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Medicamentos antiinflamatorios, fisioterapia, cambios en la dieta",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune que causa inflamación en las articulaciones y puede afectar otros órganos del cuerpo.",
+ "common_symptoms": ["Dolor articular", "Rigidez matutina", "Hinchazón en las articulaciones"],
+ "rare_symptoms": ["Fatiga crónica", "Depresión"],
+ "treatment": "El tratamiento de la artritis reumatoide puede incluir medicamentos antiinflamatorios para reducir la inflamación y el dolor, fisioterapia para mejorar la movilidad articular y cambios en la dieta para reducir la inflamación.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas de la artritis reumatoide y prevenir el daño articular a largo plazo.",
+ "treatment_mechanism": "Los medicamentos antiinflamatorios reducen la inflamación en las articulaciones, lo que ayuda a aliviar el dolor y la rigidez. La fisioterapia puede mejorar la movilidad articular y fortalecer los músculos circundantes."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Medicamentos analgésicos, terapia ocupacional"
+ },
+ {
+ "diagnosis": "Fibromialgia",
+ "treatment": "Medicamentos para el dolor, terapia cognitivo-conductual"
+ }
+ ]
+ },
+ {
+ "name": "Marta Ramírez",
+ "age": 45,
+ "gender": "Femenino",
+ "occupation": "Contadora",
+ "symptoms": "Ha experimentado sensaciones de ardor y dolor en sus piernas, especialmente por la noche. Ha notado hinchazón en sus tobillos y tiene dificultad para caminar largas distancias. Además, se siente constantemente cansada y deprimida.",
+ "diagnosis": "Insuficiencia venosa crónica",
+ "treatment": "Medias de compresión, cambios en el estilo de vida",
+ "pathology_description": {
+ "name": "Insuficiencia venosa crónica",
+ "etiology": "La insuficiencia venosa crónica se produce cuando las válvulas venosas en las piernas no funcionan correctamente, lo que provoca una acumulación de sangre en las venas y una mala circulación sanguínea.",
+ "common_symptoms": ["Sensaciones de ardor en las piernas", "Hinchazón en los tobillos", "Fatiga en las piernas"],
+ "rare_symptoms": ["Úlceras venosas", "Cambios en la pigmentación de la piel"],
+ "treatment": "El tratamiento de la insuficiencia venosa crónica puede incluir el uso de medias de compresión para mejorar la circulación, cambios en el estilo de vida como mantener las piernas elevadas y evitar estar de pie durante períodos prolongados.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas de la insuficiencia venosa crónica y prevenir complicaciones graves, como úlceras venosas.",
+ "treatment_mechanism": "Las medias de compresión aplican presión sobre las venas de las piernas, lo que ayuda a mejorar el flujo sanguíneo hacia el corazón y reduce la hinchazón y la fatiga."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Flebitis",
+ "treatment": "Anticoagulantes, compresas frías"
+ },
+ {
+ "diagnosis": "Trombosis venosa profunda",
+ "treatment": "Anticoagulantes, reposo en cama"
+ }
+ ]
+ },
+ {
+ "name": "Pablo Ruiz",
+ "age": 55,
+ "gender": "Masculino",
+ "occupation": "Gerente",
+ "symptoms": "Ha notado un bulto en su cuello que ha ido creciendo lentamente. Experimenta dificultad para tragar y ha experimentado cambios en su voz, que ahora suena ronca. Se siente fatigado y tiene problemas para dormir por la noche.",
+ "diagnosis": "Cáncer de tiroides",
+ "treatment": "Cirugía de tiroides, terapia con yodo radioactivo",
+ "pathology_description": {
+ "name": "Cáncer de tiroides",
+ "etiology": "El cáncer de tiroides se desarrolla cuando las células de la glándula tiroides comienzan a crecer de manera descontrolada, formando un tumor maligno.",
+ "common_symptoms": ["Bulto en el cuello", "Dificultad para tragar", "Cambio en la voz"],
+ "rare_symptoms": ["Fatiga", "Insomnio"],
+ "treatment": "El tratamiento del cáncer de tiroides puede incluir cirugía para extirpar parte o la totalidad de la glándula tiroides, así como terapia con yodo radioactivo para destruir las células cancerosas restantes.",
+ "treatment_effect": "El tratamiento puede ser curativo si el cáncer se detecta en etapas tempranas, aunque en etapas avanzadas puede ayudar a controlar los síntomas y prolongar la vida del paciente.",
+ "treatment_mechanism": "La cirugía de tiroides extirpa el tumor y parte o toda la glándula tiroides, mientras que la terapia con yodo radioactivo destruye las células cancerosas restantes para reducir el riesgo de recurrencia."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Bocio",
+ "treatment": "Hormona tiroidea sintética, yodo"
+ },
+ {
+ "diagnosis": "Quiste tirogloso",
+ "treatment": "Cirugía para extirpar el quiste"
+ }
+ ]
+ },
+ {
+ "name": "Sofía Díaz",
+ "age": 25,
+ "gender": "Femenino",
+ "occupation": "Estudiante",
+ "symptoms": "Ha experimentado dolor abdominal intenso, especialmente después de comer alimentos grasos. Ha notado un cambio en el color de su piel, que ahora parece amarillenta. Además, se siente constantemente cansada y con falta de energía.",
+ "diagnosis": "Cálculos biliares",
+ "treatment": "Colecistectomía, cambios en la dieta",
+ "pathology_description": {
+ "name": "Cálculos biliares",
+ "etiology": "Los cálculos biliares se forman cuando los componentes de la bilis, como el colesterol y la bilirrubina, se cristalizan y solidifican en la vesícula biliar.",
+ "common_symptoms": ["Dolor abdominal", "Náuseas", "Vómitos"],
+ "rare_symptoms": ["Coloración amarillenta de la piel", "Fiebre"],
+ "treatment": "El tratamiento de los cálculos biliares puede incluir la extirpación quirúrgica de la vesícula biliar (colecistectomía) y cambios en la dieta para reducir la formación de cálculos nuevos.",
+ "treatment_effect": "La colecistectomía generalmente alivia los síntomas de los cálculos biliares y previene complicaciones graves, como la obstrucción del conducto biliar.",
+ "treatment_mechanism": "La colecistectomía extirpa la vesícula biliar y los cálculos biliares, lo que elimina la causa de los síntomas y previene futuros episodios de cólico biliar."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Pancreatitis",
+ "treatment": "Ayuno, reposo en cama, analgésicos"
+ },
+ {
+ "diagnosis": "Úlcera péptica",
+ "treatment": "Inhibidores de la bomba de protones, antibióticos"
+ }
+ ]
+ },
+ {
+ "name": "Diego Herrera",
+ "age": 48,
+ "gender": "Masculino",
+ "occupation": "Arquitecto",
+ "symptoms": "Ha notado dolor en su pecho que se irradia hacia su brazo izquierdo. Experimenta dificultad para respirar y sudoración profusa. Además, se siente ansioso y nervioso.",
+ "diagnosis": "Infarto de miocardio",
+ "treatment": "Angioplastia coronaria, medicamentos antiplaquetarios",
+ "pathology_description": {
+ "name": "Infarto de miocardio",
+ "etiology": "El infarto de miocardio se produce cuando una arteria coronaria se obstruye repentinamente, interrumpiendo el flujo sanguíneo al músculo cardíaco y causando daño.",
+ "common_symptoms": ["Dolor en el pecho", "Dificultad para respirar", "Sudoración profusa"],
+ "rare_symptoms": ["Náuseas", "Vómitos"],
+ "treatment": "El tratamiento del infarto de miocardio puede incluir angioplastia coronaria para abrir la arteria obstruida, medicamentos antiplaquetarios para prevenir coágulos sanguíneos y rehabilitación cardíaca para mejorar la salud del corazón.",
+ "treatment_effect": "El tratamiento puede ayudar a restaurar el flujo sanguíneo al músculo cardíaco, prevenir complicaciones graves y mejorar la calidad de vida del paciente después de un infarto de miocardio.",
+ "treatment_mechanism": "La angioplastia coronaria utiliza un catéter con un balón en su extremo para abrir la arteria obstruida, restaurando así el flujo sanguíneo al corazón. Los medicamentos antiplaquetarios ayudan a prevenir la formación de coágulos sanguíneos en las arterias coronarias."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Angina de pecho",
+ "treatment": "Nitroglicerina, cambios en el estilo de vida"
+ },
+ {
+ "diagnosis": "Ansiedad",
+ "treatment": "Terapia cognitivo-conductual, medicamentos ansiolíticos"
+ }
+ ]
+ }
+ ]
+}
+
+
+ {
+ "name": "Laura Martínez",
+ "age": 35,
+ "gender": "Femenino",
+ "occupation": "Abogada",
+ "symptoms": "Ha experimentado dolor en el pecho que se irradia hacia su espalda. Tiene dificultad para respirar y se siente mareada. Además, ha notado hinchazón en sus piernas y tobillos.",
+ "diagnosis": "Insuficiencia cardíaca congestiva",
+ "treatment": "Diuréticos, inhibidores de la enzima convertidora de angiotensina (IECA)",
+ "pathology_description": {
+ "name": "Insuficiencia cardíaca congestiva",
+ "etiology": "La insuficiencia cardíaca congestiva se produce cuando el corazón no puede bombear suficiente sangre para satisfacer las necesidades del cuerpo, lo que lleva a una acumulación de líquido en los pulmones y otros tejidos.",
+ "common_symptoms": ["Dificultad para respirar", "Fatiga", "Hinchazón en las extremidades"],
+ "rare_symptoms": ["Tos nocturna", "Palpitaciones irregulares"],
+ "treatment": "El tratamiento de la insuficiencia cardíaca congestiva puede incluir diuréticos para eliminar el exceso de líquido del cuerpo, así como inhibidores de la enzima convertidora de angiotensina (IECA) para mejorar la función cardíaca.",
+ "treatment_effect": "El tratamiento puede ayudar a reducir los síntomas de la insuficiencia cardíaca congestiva y mejorar la calidad de vida del paciente al reducir la acumulación de líquido en los pulmones y otros tejidos.",
+ "treatment_mechanism": "Los diuréticos actúan eliminando el exceso de líquido del cuerpo a través de la orina, mientras que los IECA ayudan a dilatar los vasos sanguíneos y mejorar la función cardíaca."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Infarto de miocardio",
+ "treatment": "Angioplastia coronaria, medicamentos antiplaquetarios"
+ },
+ {
+ "diagnosis": "Asma",
+ "treatment": "Broncodilatadores, corticosteroides inhalados"
+ }
+ ]
+ },
+ {
+ "name": "Martín López",
+ "age": 40,
+ "gender": "Masculino",
+ "occupation": "Carpintero",
+ "symptoms": "Ha notado dolor y rigidez en sus articulaciones, especialmente por las mañanas al levantarse de la cama. Experimenta inflamación en sus manos y dedos, lo que dificulta su trabajo como carpintero.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Antiinflamatorios no esteroides (AINE), terapia física",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune en la que el sistema inmunológico ataca las articulaciones, causando inflamación crónica y daño en el cartílago y el hueso.",
+ "common_symptoms": ["Dolor articular", "Inflamación", "Rigidez matutina"],
+ "rare_symptoms": ["Fatiga", "Fiebre"],
+ "treatment": "El tratamiento de la artritis reumatoide puede incluir antiinflamatorios no esteroides (AINE) para reducir la inflamación y el dolor, así como terapia física para mejorar la movilidad y fortalecer las articulaciones.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la artritis reumatoide y prevenir el daño articular a largo plazo, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los AINE actúan reduciendo la inflamación al inhibir la producción de prostaglandinas, mientras que la terapia física ayuda a mejorar la fuerza muscular y la movilidad articular."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Analgesicos, terapia ocupacional"
+ },
+ {
+ "diagnosis": "Gota",
+ "treatment": "Alopurinol, cambios en la dieta"
+ }
+ ]
+ },
+ {
+ "name": "Ana García",
+ "age": 50,
+ "gender": "Femenino",
+ "occupation": "Enfermera",
+ "symptoms": "Ha notado inflamación y dolor en su abdomen. También experimenta diarrea frecuente y heces con sangre. Se siente cansada todo el tiempo y ha perdido peso sin motivo aparente.",
+ "diagnosis": "Enfermedad inflamatoria intestinal",
+ "treatment": "Medicamentos antiinflamatorios, cambios en la dieta",
+ "pathology_description": {
+ "name": "Enfermedad inflamatoria intestinal",
+ "etiology": "La enfermedad inflamatoria intestinal es un trastorno autoinmune en el que el sistema inmunológico ataca el revestimiento del tracto digestivo, causando inflamación crónica y daño tisular.",
+ "common_symptoms": ["Dolor abdominal", "Diarrea con sangre", "Fatiga"],
+ "rare_symptoms": ["Pérdida de peso involuntaria", "Fiebre"],
+ "treatment": "El tratamiento de la enfermedad inflamatoria intestinal puede incluir medicamentos antiinflamatorios para reducir la inflamación y los síntomas, así como cambios en la dieta para evitar los alimentos desencadenantes.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la enfermedad inflamatoria intestinal y prevenir las complicaciones a largo plazo, como las obstrucciones intestinales y las fístulas.",
+ "treatment_mechanism": "Los medicamentos antiinflamatorios reducen la inflamación al suprimir la respuesta inmunitaria, mientras que los cambios en la dieta pueden ayudar a reducir la irritación del tracto digestivo y mejorar la tolerancia a los alimentos."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Síndrome del intestino irritable",
+ "treatment": "Cambios en la dieta, medicamentos para aliviar los síntomas"
+ },
+ {
+ "diagnosis": "Diverticulitis",
+ "treatment": "Antibióticos, dieta blanda"
+ }
+ ]
+ },
+ {
+ "name": "Daniel Rodríguez",
+ "age": 25,
+ "gender": "Masculino",
+ "occupation": "Estudiante",
+ "symptoms": "Ha notado cambios en su estado de ánimo, sintiéndose triste y desesperanzado la mayor parte del tiempo. También experimenta fatiga extrema y dificultad para concentrarse en sus estudios.",
+ "diagnosis": "Depresión mayor",
+ "treatment": "Terapia cognitivo-conductual, antidepresivos",
+ "pathology_description": {
+ "name": "Depresión mayor",
+ "etiology": "La depresión mayor es un trastorno del estado de ánimo caracterizado por sentimientos persistentes de tristeza, pérdida de interés en actividades cotidianas y alteraciones en el sueño y el apetito.",
+ "common_symptoms": ["Tristeza persistente", "Fatiga", "Problemas de concentración"],
+ "rare_symptoms": ["Ideas suicidas", "Sentimientos de culpa excesivos"],
+ "treatment": "El tratamiento de la depresión mayor puede incluir terapia cognitivo-conductual para abordar patrones de pensamiento negativo, así como antidepresivos para estabilizar el estado de ánimo y mejorar los síntomas.",
+ "treatment_effect": "El tratamiento puede ayudar a reducir los síntomas de la depresión mayor y mejorar el funcionamiento psicosocial del paciente, permitiéndole recuperar una mejor calidad de vida.",
+ "treatment_mechanism": "La terapia cognitivo-conductual trabaja para cambiar patrones de pensamiento negativo y promover estrategias de afrontamiento saludables, mientras que los antidepresivos actúan sobre los neurotransmisores en el cerebro para mejorar el estado de ánimo."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Trastorno bipolar",
+ "treatment": "Estabilizadores del estado de ánimo, terapia psicosocial"
+ },
+ {
+ "diagnosis": "Trastorno de ansiedad generalizada",
+ "treatment": "Antidepresivos, terapia de relajación"
+ }
+ ]
+ },
+ {
+ "name": "Elena Fernández",
+ "age": 55,
+ "gender": "Femenino",
+ "occupation": "Gerente",
+ "symptoms": "Ha notado visión borrosa y pérdida de visión periférica en ambos ojos. Experimenta dolor en los ojos y sensibilidad a la luz. Además, ve destellos de luz y manchas oscuras flotando frente a sus ojos.",
+ "diagnosis": "Desprendimiento de retina",
+ "treatment": "Cirugía de retina, reposo ocular",
+ "pathology_description": {
+ "name": "Desprendimiento de retina",
+ "etiology": "El desprendimiento de retina ocurre cuando la retina se separa de la capa subyacente de tejido ocular, lo que interrumpe el flujo sanguíneo y la función visual.",
+ "common_symptoms": ["Visión borrosa", "Pérdida de visión periférica", "Destellos de luz"],
+ "rare_symptoms": ["Manchas oscuras flotantes", "Dolor ocular"],
+ "treatment": "El tratamiento del desprendimiento de retina puede incluir cirugía de retina para reparar la retina desprendida y restaurar la visión, así como reposo ocular para permitir que la retina se cure adecuadamente.",
+ "treatment_effect": "La cirugía de retina puede ayudar a restaurar la visión perdida debido al desprendimiento de retina y prevenir la pérdida permanente de la visión si se realiza de manera oportuna.",
+ "treatment_mechanism": "Durante la cirugía de retina, se utiliza láser o crioterapia para sellar el área de la retina que se ha desprendido, restaurando así su posición y función normales."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Glaucoma",
+ "treatment": "Gotas para los ojos para reducir la presión intraocular, cirugía láser"
+ },
+ {
+ "diagnosis": "Degeneración macular",
+ "treatment": "Suplementos vitamínicos, inyecciones intraoculares"
+ }
+ ]
+ },
+ {
+ "name": "Pablo Martínez",
+ "age": 28,
+ "gender": "Masculino",
+ "occupation": "Diseñador gráfico",
+ "symptoms": "Ha notado manchas rojas en su piel que le pican intensamente. También experimenta hinchazón en sus labios y dificultad para respirar. Se siente ansioso y asustado por la aparición repentina de estos síntomas.",
+ "diagnosis": "Reacción alérgica grave",
+ "treatment": "Epinefrina (adrenalina), antihistamínicos",
+ "pathology_description": {
+ "name": "Reacción alérgica grave",
+ "etiology": "Una reacción alérgica grave, también conocida como anafilaxia, puede ocurrir cuando el sistema inmunológico tiene una respuesta exagerada a un alérgeno, como alimentos, picaduras de insectos o medicamentos.",
+ "common_symptoms": ["Urticaria", "Hinchazón", "Dificultad para respirar"],
+ "rare_symptoms": ["Dolor abdominal", "Confusión mental"],
+ "treatment": "El tratamiento de una reacción alérgica grave generalmente implica la administración de epinefrina (adrenalina) para revertir los síntomas, así como antihistamínicos para reducir la inflamación y los síntomas alérgicos.",
+ "treatment_effect": "La administración temprana de epinefrina puede prevenir complicaciones graves y potencialmente mortales asociadas con una reacción alérgica grave, como el shock anafiláctico y la insuficiencia respiratoria.",
+ "treatment_mechanism": "La epinefrina actúa rápidamente para dilatar las vías respiratorias y aumentar la presión arterial, revirtiendo así los síntomas potencialmente mortales de una reacción alérgica grave."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Dermatitis atópica",
+ "treatment": "Hidratantes para la piel, corticosteroides tópicos"
+ },
+ {
+ "diagnosis": "Asma",
+ "treatment": "Broncodilatadores, corticosteroides inhalados"
+ }
+ ]
+ },
+ {
+ "name": "Julia Sánchez",
+ "age": 65,
+ "gender": "Femenino",
+ "occupation": "Jubilada",
+ "symptoms": "Ha notado temblores en sus manos que se vuelven más pronunciados cuando intenta sostener objetos o realizar tareas precisas. También experimenta rigidez muscular y dificultad para caminar.",
+ "diagnosis": "Enfermedad de Parkinson",
+ "treatment": "Levodopa, terapia ocupacional",
+ "pathology_description": {
+ "name": "Enfermedad de Parkinson",
+ "etiology": "La enfermedad de Parkinson es un trastorno neurodegenerativo caracterizado por la pérdida de neuronas productoras de dopamina en el cerebro, lo que conduce a síntomas motores como temblores, rigidez y bradicinesia.",
+ "common_symptoms": ["Temblores", "Rigidez muscular", "Bradicinesia"],
+ "rare_symptoms": ["Pérdida del olfato", "Dificultad para tragar"],
+ "treatment": "El tratamiento de la enfermedad de Parkinson puede incluir medicamentos como la levodopa para aumentar los niveles de dopamina en el cerebro, así como terapia ocupacional para mantener la funcionalidad y la independencia.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la enfermedad de Parkinson y mejorar la calidad de vida del paciente al reducir la discapacidad motora y mejorar la función cognitiva.",
+ "treatment_mechanism": "La levodopa se convierte en dopamina en el cerebro, compensando la deficiencia de dopamina asociada con la enfermedad de Parkinson y aliviando así los síntomas motores."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Esclerosis múltiple",
+ "treatment": "Medicamentos inmunosupresores, terapia física"
+ },
+ {
+ "diagnosis": "Atrofia muscular espinal",
+ "treatment": "Terapia génica, soporte respiratorio"
+ }
+ ]
+ },
+ {
+ "name": "Luisa Ramírez",
+ "age": 45,
+ "gender": "Femenino",
+ "occupation": "Contadora",
+ "symptoms": "Ha experimentado dolores punzantes en su pecho que se extienden hacia su brazo izquierdo. También siente opresión en el pecho y dificultad para respirar. Ha notado náuseas y sudoración profusa.",
+ "diagnosis": "Infarto de miocardio",
+ "treatment": "Angioplastia coronaria, medicamentos antiplaquetarios",
+ "pathology_description": {
+ "name": "Infarto de miocardio",
+ "etiology": "El infarto de miocardio ocurre cuando hay una obstrucción en una o más de las arterias coronarias que suministran sangre al músculo cardíaco, lo que resulta en una reducción del flujo sanguíneo y daño al tejido cardíaco.",
+ "common_symptoms": ["Dolor en el pecho", "Dificultad para respirar", "Náuseas"],
+ "rare_symptoms": ["Sudoración profusa", "Desmayo"],
+ "treatment": "El tratamiento del infarto de miocardio puede incluir angioplastia coronaria para despejar la obstrucción arterial y restaurar el flujo sanguíneo, así como medicamentos antiplaquetarios para prevenir la formación de coágulos.",
+ "treatment_effect": "La angioplastia coronaria puede restaurar el flujo sanguíneo al músculo cardíaco y prevenir el daño adicional, mientras que los medicamentos antiplaquetarios pueden reducir el riesgo de nuevos eventos cardiovasculares.",
+ "treatment_mechanism": "Durante la angioplastia coronaria, se utiliza un catéter para abrir la arteria obstruida y colocar un stent para mantenerla abierta, restableciendo así el flujo sanguíneo al corazón."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Dolor muscular",
+ "treatment": "Analgésicos, terapia física"
+ },
+ {
+ "diagnosis": "Reflujo gastroesofágico",
+ "treatment": "Antiácidos, cambios en la dieta"
+ }
+ ]
+ },
+ {
+ "name": "Andrés Pérez",
+ "age": 50,
+ "gender": "Masculino",
+ "occupation": "Mecánico",
+ "symptoms": "Ha notado una protuberancia en su cuello que ha ido creciendo lentamente con el tiempo. Experimenta dificultad para tragar y sensación de opresión en la garganta. Además, se siente cansado y débil.",
+ "diagnosis": "Cáncer de tiroides",
+ "treatment": "Cirugía de tiroides, terapia de yodo radiactivo",
+ "pathology_description": {
+ "name": "Cáncer de tiroides",
+ "etiology": "El cáncer de tiroides se desarrolla cuando las células de la glándula tiroides experimentan mutaciones genéticas que causan un crecimiento descontrolado y la formación de tumores malignos.",
+ "common_symptoms": ["Protuberancia en el cuello", "Dificultad para tragar", "Cansancio"],
+ "rare_symptoms": ["Cambio en la voz", "Dolor en el cuello"],
+ "treatment": "El tratamiento del cáncer de tiroides puede incluir cirugía para extirpar la glándula tiroides afectada, así como terapia de yodo radiactivo para destruir las células cancerosas restantes.",
+ "treatment_effect": "La cirugía puede eliminar el cáncer de tiroides en su etapa inicial, mientras que la terapia de yodo radiactivo puede eliminar cualquier célula cancerosa residual y prevenir la recurrencia.",
+ "treatment_mechanism": "La cirugía de tiroides implica la extirpación del tejido tiroideo afectado, mientras que la terapia de yodo radiactivo utiliza el yodo radiactivo para destruir las células cancerosas restantes en el cuerpo."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Bocio",
+ "treatment": "Hormona tiroidea sintética, yodo"
+ },
+ {
+ "diagnosis": "Nódulo tiroideo",
+ "treatment": "Biopsia, seguimiento periódico"
+ }
+ ]
+ },
+ {
+ "name": "Laura González",
+ "age": 60,
+ "gender": "Femenino",
+ "occupation": "Ama de casa",
+ "symptoms": "Ha experimentado dolor y rigidez en sus articulaciones, especialmente en las manos y los pies. Tiene dificultad para moverse y realizar tareas cotidianas. Además, ha notado inflamación en sus articulaciones.",
+ "diagnosis": "Osteoartritis",
+ "treatment": "Analgesicos, terapia física",
+ "pathology_description": {
+ "name": "Osteoartritis",
+ "etiology": "La osteoartritis es una enfermedad degenerativa de las articulaciones que resulta del desgaste del cartílago articular con el tiempo, lo que causa dolor, inflamación y rigidez en las articulaciones afectadas.",
+ "common_symptoms": ["Dolor articular", "Rigidez", "Inflamación"],
+ "rare_symptoms": ["Deformidad articular", "Crepitación articular"],
+ "treatment": "El tratamiento de la osteoartritis puede incluir analgésicos para aliviar el dolor, así como terapia física para fortalecer los músculos circundantes y mejorar la movilidad articular.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la osteoartritis y mejorar la calidad de vida del paciente al reducir el dolor y mejorar la función articular.",
+ "treatment_mechanism": "Los analgésicos actúan para reducir el dolor al inhibir la transmisión de las señales de dolor al cerebro, mientras que la terapia física ayuda a mejorar la fuerza muscular y la movilidad articular."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Antiinflamatorios no esteroides (AINE), terapia física"
+ },
+ {
+ "diagnosis": "Gota",
+ "treatment": "Alopurinol, cambios en la dieta"
+ }
+ ]
+ }
+ ]
+}
+
+
+ {
+ "name": "Gabriel Martínez",
+ "age": 35,
+ "gender": "Masculino",
+ "occupation": "Abogado",
+ "symptoms": "Ha experimentado episodios de visión borrosa y pérdida temporal de la visión en un ojo. También ha notado dolor detrás de su ojo y sensibilidad a la luz. Los síntomas suelen durar unos minutos y luego desaparecen.",
+ "diagnosis": "Migraña oftálmica",
+ "treatment": "Analgésicos, terapia preventiva",
+ "pathology_description": {
+ "name": "Migraña oftálmica",
+ "etiology": "La migraña oftálmica es un tipo de migraña que afecta la visión y puede causar síntomas visuales como destellos de luz, manchas ciegas y visión borrosa debido a la disfunción temporal de los nervios ópticos.",
+ "common_symptoms": ["Visión borrosa", "Destellos de luz", "Manchas ciegas"],
+ "rare_symptoms": ["Pérdida temporal de la visión", "Sensibilidad a la luz"],
+ "treatment": "El tratamiento de la migraña oftálmica puede incluir analgésicos para aliviar el dolor, así como terapia preventiva para reducir la frecuencia y la gravedad de los episodios.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la migraña oftálmica y mejorar la calidad de vida del paciente al reducir el dolor y la discapacidad asociados con los episodios.",
+ "treatment_mechanism": "Los analgésicos actúan para aliviar el dolor, mientras que la terapia preventiva puede implicar el uso de medicamentos específicos para prevenir los ataques de migraña."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Glaucoma",
+ "treatment": "Gotas para los ojos para reducir la presión intraocular, cirugía láser"
+ },
+ {
+ "diagnosis": "Esclerosis múltiple",
+ "treatment": "Medicamentos inmunosupresores, terapia física"
+ }
+ ]
+ },
+ {
+ "name": "Ana López",
+ "age": 28,
+ "gender": "Femenino",
+ "occupation": "Diseñadora gráfica",
+ "symptoms": "Ha experimentado episodios de vértigo repentino que la hacen sentir como si estuviera girando o inclinándose. Los episodios pueden durar desde unos pocos segundos hasta varios minutos y pueden ir acompañados de náuseas y vómitos.",
+ "diagnosis": "Vértigo posicional paroxístico benigno",
+ "treatment": "Maniobras de reposicionamiento, medicamentos",
+ "pathology_description": {
+ "name": "Vértigo posicional paroxístico benigno",
+ "etiology": "El vértigo posicional paroxístico benigno es causado por la presencia de pequeños cristales de carbonato de calcio en el oído interno que se desplazan a los conductos semicirculares, lo que provoca una sensación errónea de movimiento.",
+ "common_symptoms": ["Sensación de giro o inclinación", "Náuseas", "Vómitos"],
+ "rare_symptoms": ["Dificultad para caminar", "Visión borrosa"],
+ "treatment": "El tratamiento del vértigo posicional paroxístico benigno puede incluir maniobras de reposicionamiento para mover los cristales de calcio a una posición que no cause síntomas, así como medicamentos para aliviar los síntomas.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas del vértigo posicional paroxístico benigno y mejorar la calidad de vida del paciente al reducir la frecuencia e intensidad de los episodios.",
+ "treatment_mechanism": "Las maniobras de reposicionamiento ayudan a mover los cristales de calcio a una posición que no cause síntomas, mientras que los medicamentos pueden ayudar a controlar los síntomas durante los episodios."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Laberintitis",
+ "treatment": "Antibióticos, corticosteroides"
+ },
+ {
+ "diagnosis": "Neuritis vestibular",
+ "treatment": "Antivertiginosos, terapia vestibular"
+ }
+ ]
+ },
+ {
+ "name": "Fernando Díaz",
+ "age": 55,
+ "gender": "Masculino",
+ "occupation": "Carpintero",
+ "symptoms": "Ha experimentado dolor y rigidez en sus articulaciones, especialmente en las manos y las rodillas. Además, ha notado hinchazón y enrojecimiento alrededor de las articulaciones afectadas.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Fármacos antirreumáticos modificadores de la enfermedad (FARME), terapia física",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune que causa inflamación crónica de las articulaciones, lo que resulta en dolor, rigidez y deformidad articular.",
+ "common_symptoms": ["Dolor articular", "Rigidez", "Hinchazón"],
+ "rare_symptoms": ["Fatiga", "Fiebre"],
+ "treatment": "El tratamiento de la artritis reumatoide puede incluir fármacos antirreumáticos modificadores de la enfermedad (FARME) para reducir la inflamación y prevenir el daño articular, así como terapia física para mejorar la movilidad y la función articular.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la artritis reumatoide y prevenir el daño articular progresivo, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los FARME actúan suprimiendo la respuesta autoinmune que causa la inflamación articular, mientras que la terapia física puede ayudar a mejorar la movilidad y la fuerza muscular."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Analgésicos, terapia física"
+ },
+ {
+ "diagnosis": "Gota",
+ "treatment": "Alopurinol, cambios en la dieta"
+ }
+ ]
+ },
+ {
+ "name": "Paula García",
+ "age": 40,
+ "gender": "Femenino",
+ "occupation": "Médica",
+ "symptoms": "Ha experimentado dolor abdominal recurrente, especialmente después de comer alimentos grasos o picantes. También ha notado náuseas y vómitos ocasionales.",
+ "diagnosis": "Colecistitis",
+ "treatment": "Cirugía de extirpación de la vesícula biliar, cambios en la dieta",
+ "pathology_description": {
+ "name": "Colecistitis",
+ "etiology": "La colecistitis es una inflamación aguda o crónica de la vesícula biliar, generalmente causada por la presencia de cálculos biliares que obstruyen el conducto cístico.",
+ "common_symptoms": ["Dolor abdominal", "Náuseas", "Vómitos"],
+ "rare_symptoms": ["Fiebre", "Ictericia"],
+ "treatment": "El tratamiento de la colecistitis aguda generalmente implica la extirpación quirúrgica de la vesícula biliar (colecistectomía), mientras que el tratamiento de la colecistitis crónica puede implicar cambios en la dieta y el estilo de vida para evitar la recurrencia de los síntomas.",
+ "treatment_effect": "La cirugía de extirpación de la vesícula biliar generalmente alivia los síntomas de la colecistitis aguda y previene la recurrencia de los ataques. Los cambios en la dieta y el estilo de vida pueden ayudar a controlar los síntomas de la colecistitis crónica.",
+ "treatment_mechanism": "La extirpación de la vesícula biliar elimina la fuente de obstrucción del conducto biliar, aliviando así los síntomas de la colecistitis aguda. Los cambios en la dieta pueden ayudar a prevenir la formación de cálculos biliares y reducir la recurrencia de los ataques."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Úlcera péptica",
+ "treatment": "Inhibidores de la bomba de protones (IBP), antibióticos"
+ },
+ {
+ "diagnosis": "Pancreatitis",
+ "treatment": "Hospitalización, reposo intestinal"
+ }
+ ]
+ },
+ {
+ "name": "Marta Rodríguez",
+ "age": 50,
+ "gender": "Femenino",
+ "occupation": "Secretaria",
+ "symptoms": "Ha experimentado hinchazón y dolor en sus manos y pies, especialmente por las mañanas al levantarse de la cama. Además, ha notado rigidez y dificultad para moverse.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Fármacos antirreumáticos modificadores de la enfermedad (FARME), terapia física",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune que causa inflamación crónica de las articulaciones, lo que resulta en dolor, rigidez y deformidad articular.",
+ "common_symptoms": ["Dolor articular", "Rigidez", "Hinchazón"],
+ "rare_symptoms": ["Fatiga", "Fiebre"],
+ "treatment": "El tratamiento de la artritis reumatoide puede incluir fármacos antirreumáticos modificadores de la enfermedad (FARME) para reducir la inflamación y prevenir el daño articular, así como terapia física para mejorar la movilidad y la función articular.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la artritis reumatoide y prevenir el daño articular progresivo, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los FARME actúan suprimiendo la respuesta autoinmune que causa la inflamación articular, mientras que la terapia física puede ayudar a mejorar la movilidad y la fuerza muscular."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Analgésicos, terapia física"
+ },
+ {
+ "diagnosis": "Gota",
+ "treatment": "Alopurinol, cambios en la dieta"
+ }
+ ]
+ },
+ {
+ "name": "Marcos Pérez",
+ "age": 45,
+ "gender": "Masculino",
+ "occupation": "Ingeniero",
+ "symptoms": "Ha experimentado dolor en el pecho y dificultad para respirar, especialmente durante la actividad física. Además, ha notado hinchazón en sus piernas y tobillos.",
+ "diagnosis": "Insuficiencia cardíaca congestiva",
+ "treatment": "Diuréticos, inhibidores de la ECA",
+ "pathology_description": {
+ "name": "Insuficiencia cardíaca congestiva",
+ "etiology": "La insuficiencia cardíaca congestiva es una afección en la que el corazón no puede bombear suficiente sangre para satisfacer las necesidades del cuerpo, lo que resulta en la acumulación de líquido en los pulmones y otros tejidos.",
+ "common_symptoms": ["Dificultad para respirar", "Fatiga", "Hinchazón"],
+ "rare_symptoms": ["Tos nocturna", "Confusión"],
+ "treatment": "El tratamiento de la insuficiencia cardíaca congestiva puede incluir diuréticos para reducir la acumulación de líquido, así como inhibidores de la enzima convertidora de angiotensina (ECA) para mejorar la función cardíaca y reducir la carga sobre el corazón.",
+ "treatment_effect": "El tratamiento puede ayudar a mejorar los síntomas de la insuficiencia cardíaca congestiva y a prevenir la progresión de la enfermedad, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los diuréticos actúan aumentando la excreción de agua y sal a través de los riñones, lo que reduce la acumulación de líquido en el cuerpo. Los inhibidores de la ECA ayudan a dilatar los vasos sanguíneos y a mejorar la función cardíaca."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Neumonía",
+ "treatment": "Antibióticos, reposo en cama"
+ },
+ {
+ "diagnosis": "Asma",
+ "treatment": "Broncodilatadores, corticosteroides inhalados"
+ }
+ ]
+ },
+ {
+ "name": "Laura Gómez",
+ "age": 32,
+ "gender": "Femenino",
+ "occupation": "Diseñadora de moda",
+ "symptoms": "Ha experimentado fatiga extrema, dolores musculares y articulares, y dificultad para concentrarse. También ha notado sensibilidad al frío y pérdida de cabello.",
+ "diagnosis": "Tiroiditis de Hashimoto",
+ "treatment": "Hormona tiroidea de reemplazo",
+ "pathology_description": {
+ "name": "Tiroiditis de Hashimoto",
+ "etiology": "La tiroiditis de Hashimoto es una enfermedad autoinmune en la que el sistema inmunológico ataca la glándula tiroides, lo que resulta en inflamación y daño tisular.",
+ "common_symptoms": ["Fatiga", "Dolores musculares", "Dificultad para concentrarse"],
+ "rare_symptoms": ["Sensibilidad al frío", "Pérdida de cabello"],
+ "treatment": "El tratamiento de la tiroiditis de Hashimoto generalmente implica la administración de hormona tiroidea de reemplazo para compensar la deficiencia hormonal y controlar los síntomas.",
+ "treatment_effect": "El tratamiento con hormona tiroidea de reemplazo puede ayudar a restaurar los niveles hormonales normales y aliviar los síntomas de la tiroiditis de Hashimoto, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "La hormona tiroidea de reemplazo actúa supliendo la hormona tiroidea que la glándula tiroides no puede producir debido al daño autoinmune, lo que ayuda a restaurar los niveles hormonales normales en el cuerpo."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Fibromialgia",
+ "treatment": "Antidepresivos, terapia cognitivo-conductual"
+ },
+ {
+ "diagnosis": "Síndrome de fatiga crónica",
+ "treatment": "Terapia cognitivo-conductual, ejercicio gradual"
+ }
+ ]
+ },
+ {
+ "name": "Juan Pérez",
+ "age": 60,
+ "gender": "Masculino",
+ "occupation": "Jubilado",
+ "symptoms": "Ha notado dificultad para tragar alimentos sólidos y líquidos, así como sensación de obstrucción en la garganta. También ha experimentado pérdida de peso involuntaria y cambios en la voz.",
+ "diagnosis": "Cáncer de esófago",
+ "treatment": "Cirugía, quimioterapia, radioterapia",
+ "pathology_description": {
+ "name": "Cáncer de esófago",
+ "etiology": "El cáncer de esófago se desarrolla cuando las células anormales en el revestimiento del esófago comienzan a crecer y dividirse de manera descontrolada, formando un tumor maligno.",
+ "common_symptoms": ["Dificultad para tragar", "Pérdida de peso", "Cambios en la voz"],
+ "rare_symptoms": ["Dolor torácico", "Tos con sangre"],
+ "treatment": "El tratamiento del cáncer de esófago puede incluir cirugía para extirpar el tumor, quimioterapia para destruir las células cancerosas y radioterapia para reducir el tamaño del tumor antes de la cirugía.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar el cáncer de esófago y mejorar la calidad de vida del paciente al reducir los síntomas y prevenir la propagación del cáncer a otras partes del cuerpo.",
+ "treatment_mechanism": "La cirugía extirpa el tumor y parte del esófago afectado, mientras que la quimioterapia y la radioterapia destruyen las células cancerosas restantes y reducen el tamaño del tumor antes de la cirugía."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Reflujo gastroesofágico",
+ "treatment": "Antagonistas de los receptores H2, inhibidores de la bomba de protones"
+ },
+ {
+ "diagnosis": "Estenosis esofágica",
+ "treatment": "Dilatación esofágica, medicamentos"
+ }
+ ]
+ },
+ {
+ "name": "Lucía Sánchez",
+ "age": 25,
+ "gender": "Femenino",
+ "occupation": "Estudiante",
+ "symptoms": "Ha experimentado dolor abdominal, diarrea crónica y sangre en las heces. También ha notado pérdida de peso involuntaria y fatiga extrema.",
+ "diagnosis": "Enfermedad de Crohn",
+ "treatment": "Medicamentos antiinflamatorios, cambios en la dieta",
+ "pathology_description": {
+ "name": "Enfermedad de Crohn",
+ "etiology": "La enfermedad de Crohn es una enfermedad inflamatoria intestinal crónica que puede afectar cualquier parte del tracto gastrointestinal, desde la boca hasta el ano.",
+ "common_symptoms": ["Dolor abdominal", "Diarrea", "Fatiga"],
+ "rare_symptoms": ["Sangre en las heces", "Fiebre"],
+ "treatment": "El tratamiento de la enfermedad de Crohn puede incluir medicamentos antiinflamatorios para reducir la inflamación y controlar los síntomas, así como cambios en la dieta para evitar alimentos que desencadenen brotes de la enfermedad.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la enfermedad de Crohn y prevenir la progresión de la enfermedad, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los medicamentos antiinflamatorios actúan para reducir la inflamación en el tracto gastrointestinal, lo que ayuda a controlar los síntomas de la enfermedad de Crohn. Los cambios en la dieta pueden ayudar a reducir la irritación y prevenir los brotes de la enfermedad."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Síndrome del intestino irritable",
+ "treatment": "Cambios en la dieta, medicamentos para aliviar los síntomas"
+ },
+ {
+ "diagnosis": "Colitis ulcerosa",
+ "treatment": "Antiinflamatorios, suplementos de fibra"
+ }
+ ]
+ },
+ {
+ "name": "Alejandro Ruiz",
+ "age": 38,
+ "gender": "Masculino",
+ "occupation": "Contador",
+ "symptoms": "Ha experimentado dolor y sensibilidad en las articulaciones, especialmente en las manos y los pies. Además, ha notado rigidez matutina y dificultad para realizar tareas cotidianas.",
+ "diagnosis": "Artritis psoriásica",
+ "treatment": "Fármacos antirreumáticos modificadores de la enfermedad (FARME), terapia física",
+ "pathology_description": {
+ "name": "Artritis psoriásica",
+ "etiology": "La artritis psoriásica es una enfermedad autoinmune que afecta a las articulaciones y está asociada con la psoriasis, una enfermedad de la piel caracterizada por erupciones rojas y escamosas.",
+ "common_symptoms": ["Dolor articular", "Rigidez matutina", "Sensibilidad"],
+ "rare_symptoms": ["Uñas engrosadas", "Inflamación de los dedos de manos y pies"],
+ "treatment": "El tratamiento de la artritis psoriásica puede incluir fármacos antirreumáticos modificadores de la enfermedad (FARME) para reducir la inflamación y prevenir el daño articular, así como terapia física para mejorar la movilidad y la función articular.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la artritis psoriásica y prevenir el daño articular progresivo, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los FARME actúan suprimiendo la respuesta autoinmune que causa la inflamación articular, mientras que la terapia física puede ayudar a mejorar la movilidad y la fuerza muscular."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Artrosis",
+ "treatment": "Analgésicos, terapia física"
+ },
+ {
+ "diagnosis": "Espondilitis anquilosante",
+ "treatment": "Fármacos antiinflamatorios no esteroides (AINE), terapia física"
+ }
+ ]
+ },
+ {
+ "name": "Luisa Fernández",
+ "age": 48,
+ "gender": "Femenino",
+ "occupation": "Administradora",
+ "symptoms": "Ha notado un aumento repentino de peso, fatiga extrema y sensibilidad al frío. También ha experimentado estreñimiento y sequedad en la piel.",
+ "diagnosis": "Hipotiroidismo",
+ "treatment": "Hormona tiroidea de reemplazo",
+ "pathology_description": {
+ "name": "Hipotiroidismo",
+ "etiology": "El hipotiroidismo es una afección en la que la glándula tiroides no produce suficiente hormona tiroidea, lo que puede provocar una disminución del metabolismo y una variedad de síntomas.",
+ "common_symptoms": ["Aumento de peso", "Fatiga", "Sensibilidad al frío"],
+ "rare_symptoms": ["Estreñimiento", "Pérdida de cabello"],
+ "treatment": "El tratamiento del hipotiroidismo implica la administración de hormona tiroidea de reemplazo para restaurar los niveles hormonales normales y aliviar los síntomas.",
+ "treatment_effect": "El tratamiento con hormona tiroidea de reemplazo puede ayudar a controlar los síntomas del hipotiroidismo y prevenir complicaciones a largo plazo, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "La hormona tiroidea de reemplazo actúa supliendo la hormona tiroidea que la glándula tiroides no puede producir en cantidades suficientes, lo que ayuda a restaurar los niveles hormonales normales en el cuerpo."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Síndrome de ovario poliquístico",
+ "treatment": "Anticonceptivos orales, metformina"
+ },
+ {
+ "diagnosis": "Depresión",
+ "treatment": "Antidepresivos, terapia cognitivo-conductual"
+ }
+ ]
+ }
+ ]
+}
+
+
+[
+ {
+ "name": "Gabriela López",
+ "age": 35,
+ "gender": "Femenino",
+ "occupation": "Diseñadora gráfica",
+ "symptoms": "Ha experimentado dolor abdominal intenso, especialmente después de comer alimentos grasos. También ha notado náuseas y vómitos frecuentes, así como heces de color arcilla.",
+ "diagnosis": "Colecistitis",
+ "treatment": "Colecistectomía, dieta baja en grasas",
+ "pathology_description": {
+ "name": "Colecistitis",
+ "etiology": "La colecistitis es una inflamación aguda o crónica de la vesícula biliar, generalmente causada por la presencia de cálculos biliares que obstruyen el conducto biliar.",
+ "common_symptoms": ["Dolor abdominal", "Náuseas", "Vómitos"],
+ "rare_symptoms": ["Heces de color arcilla", "Fiebre"],
+ "treatment": "El tratamiento de la colecistitis generalmente implica la extirpación quirúrgica de la vesícula biliar (colecistectomía) y una dieta baja en grasas para prevenir futuros episodios.",
+ "treatment_effect": "La colecistectomía puede aliviar los síntomas de la colecistitis y prevenir complicaciones graves, como la perforación de la vesícula biliar.",
+ "treatment_mechanism": "La colecistectomía implica la extirpación quirúrgica de la vesícula biliar, lo que elimina la fuente de obstrucción y alivia la inflamación. Una dieta baja en grasas puede ayudar a prevenir la formación de nuevos cálculos biliares."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Gastritis",
+ "treatment": "Antiácidos, dieta blanda"
+ },
+ {
+ "diagnosis": "Úlcera péptica",
+ "treatment": "Inhibidores de la bomba de protones (IBP), antibióticos"
+ }
+ ]
+ },
+ {
+ "name": "Eduardo Sánchez",
+ "age": 55,
+ "gender": "Masculino",
+ "occupation": "Ingeniero civil",
+ "symptoms": "Ha experimentado un dolor punzante en el pecho que se irradia hacia el brazo izquierdo. También ha sentido opresión en el pecho y dificultad para respirar.",
+ "diagnosis": "Infarto de miocardio",
+ "treatment": "Terapia de reperfusión, medicamentos antiagregantes plaquetarios",
+ "pathology_description": {
+ "name": "Infarto de miocardio",
+ "etiology": "El infarto de miocardio ocurre cuando se produce un bloqueo repentino del flujo sanguíneo al músculo cardíaco, generalmente debido a la formación de un coágulo de sangre en una arteria coronaria.",
+ "common_symptoms": ["Dolor en el pecho", "Dificultad para respirar", "Sudoración"],
+ "rare_symptoms": ["Náuseas", "Vómitos"],
+ "treatment": "El tratamiento del infarto de miocardio implica la restauración del flujo sanguíneo al corazón mediante terapia de reperfusión, como angioplastia o trombolisis, y el uso de medicamentos antiagregantes plaquetarios para prevenir la formación de nuevos coágulos sanguíneos.",
+ "treatment_effect": "La terapia de reperfusión puede salvar vidas al restaurar el flujo sanguíneo al corazón y prevenir el daño permanente al músculo cardíaco. Los medicamentos antiagregantes plaquetarios pueden reducir el riesgo de futuros eventos cardiovasculares.",
+ "treatment_mechanism": "La terapia de reperfusión disuelve o elimina el coágulo de sangre que bloquea la arteria coronaria, restaurando así el flujo sanguíneo al corazón. Los medicamentos antiagregantes plaquetarios ayudan a prevenir la formación de nuevos coágulos sanguíneos al inhibir la agregación plaquetaria."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Dolor muscular",
+ "treatment": "Analgésicos, reposo"
+ },
+ {
+ "diagnosis": "Neumonía",
+ "treatment": "Antibióticos, reposo en cama"
+ }
+ ]
+ },
+ {
+ "name": "Sandra Martínez",
+ "age": 42,
+ "gender": "Femenino",
+ "occupation": "Abogada",
+ "symptoms": "Ha experimentado dolor e inflamación en las articulaciones, especialmente en las manos y los pies. También ha notado rigidez matutina y dificultad para realizar actividades cotidianas.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Fármacos antirreumáticos modificadores de la enfermedad (FARME), terapia física",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune que causa inflamación crónica de las articulaciones, lo que puede provocar dolor, hinchazón y deterioro articular.",
+ "common_symptoms": ["Dolor articular", "Inflamación", "Rigidez matutina"],
+ "rare_symptoms": ["Nódulos reumatoides", "Fatiga crónica"],
+ "treatment": "El tratamiento de la artritis reumatoide generalmente implica el uso de fármacos antirreumáticos modificadores de la enfermedad (FARME) para reducir la inflamación y prevenir el daño articular, así como terapia física para mejorar la movilidad y la función articular.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la artritis reumatoide y prevenir el daño articular progresivo, mejorando así la calidad de vida del paciente.",
+ "treatment_mechanism": "Los FARME actúan suprimiendo la respuesta autoinmune que causa la inflamación articular, mientras que la terapia física puede ayudar a mejorar la movilidad y la fuerza muscular."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Analgésicos, fisioterapia"
+ },
+ {
+ "diagnosis": "Lupus eritematoso sistémico",
+ "treatment": "Corticosteroides, inmunosupresores"
+ }
+ ]
+ },
+ {
+ "name": "Alejandro Torres",
+ "age": 28,
+ "gender": "Masculino",
+ "occupation": "Estudiante universitario",
+ "symptoms": "Ha experimentado dolor abdominal recurrente, especialmente después de comer alimentos grasos o picantes. También ha notado malestar estomacal y eructos frecuentes.",
+ "diagnosis": "Reflujo gastroesofágico",
+ "treatment": "Inhibidores de la bomba de protones (IBP), cambios en la dieta y el estilo de vida",
+ "pathology_description": {
+ "name": "Reflujo gastroesofágico",
+ "etiology": "El reflujo gastroesofágico ocurre cuando el ácido del estómago regresa al esófago, causando irritación y síntomas como acidez estomacal y regurgitación.",
+ "common_symptoms": ["Acidez estomacal", "Regurgitación", "Malestar estomacal"],
+ "rare_symptoms": ["Dolor en el pecho", "Tos crónica"],
+ "treatment": "El tratamiento del reflujo gastroesofágico generalmente implica el uso de inhibidores de la bomba de protones (IBP) para reducir la producción de ácido estomacal y cambios en la dieta y el estilo de vida para evitar los desencadenantes.",
+ "treatment_effect": "El tratamiento puede aliviar los síntomas del reflujo gastroesofágico y prevenir complicaciones graves, como el daño esofágico.",
+ "treatment_mechanism": "Los IBP reducen la producción de ácido estomacal al inhibir la enzima responsable de su secreción, mientras que los cambios en la dieta y el estilo de vida pueden ayudar a evitar los desencadenantes del reflujo gastroesofágico."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Gastritis",
+ "treatment": "Antiácidos, dieta blanda"
+ },
+ {
+ "diagnosis": "Úlcera péptica",
+ "treatment": "Inhibidores de la bomba de protones (IBP), antibióticos"
+ }
+ ]
+ },
+ {
+ "name": "Carmen Gutiérrez",
+ "age": 50,
+ "gender": "Femenino",
+ "occupation": "Administradora",
+ "symptoms": "Ha experimentado hinchazón abdominal y gases excesivos después de comer ciertos alimentos, especialmente lácteos. También ha notado diarrea intermitente y malestar general.",
+ "diagnosis": "Síndrome del intestino irritable",
+ "treatment": "Modificación de la dieta, manejo del estrés",
+ "pathology_description": {
+ "name": "Síndrome del intestino irritable",
+ "etiology": "El síndrome del intestino irritable es un trastorno funcional del intestino que se caracteriza por dolor abdominal, hinchazón, alteraciones en el tránsito intestinal y malestar gastrointestinal crónico, sin una causa orgánica subyacente clara.",
+ "common_symptoms": ["Dolor abdominal", "Hinchazón", "Trastornos del tránsito intestinal"],
+ "rare_symptoms": ["Fatiga", "Náuseas"],
+ "treatment": "El tratamiento del síndrome del intestino irritable generalmente implica la modificación de la dieta para evitar los alimentos desencadenantes, así como el manejo del estrés y, en algunos casos, medicamentos para aliviar los síntomas específicos.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas del síndrome del intestino irritable y mejorar la calidad de vida del paciente, aunque los resultados pueden variar según la gravedad de los síntomas y la respuesta individual.",
+ "treatment_mechanism": "La modificación de la dieta implica identificar y evitar los alimentos que desencadenan los síntomas, mientras que el manejo del estrés puede ayudar a reducir la exacerbación de los síntomas. Los medicamentos, como los antiespasmódicos o los antidiarreicos, pueden usarse para aliviar los síntomas específicos según sea necesario."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Enfermedad celíaca",
+ "treatment": "Dieta libre de gluten, suplementos vitamínicos"
+ },
+ {
+ "diagnosis": "Colitis ulcerosa",
+ "treatment": "Antiinflamatorios, inmunosupresores"
+ }
+ ]
+ },
+ {
+ "name": "Martín Ramírez",
+ "age": 65,
+ "gender": "Masculino",
+ "occupation": "Jubilado",
+ "symptoms": "Ha experimentado temblores involuntarios en las manos y la cabeza, especialmente cuando intenta realizar actividades precisas. También ha notado rigidez muscular y dificultad para caminar.",
+ "diagnosis": "Enfermedad de Parkinson",
+ "treatment": "Fármacos dopaminérgicos, terapia física",
+ "pathology_description": {
+ "name": "Enfermedad de Parkinson",
+ "etiology": "La enfermedad de Parkinson es un trastorno neurodegenerativo crónico que afecta principalmente al sistema motor, causando temblores, rigidez muscular, bradicinesia y dificultad para caminar.",
+ "common_symptoms": ["Temblores", "Rigidez muscular", "Bradicinesia"],
+ "rare_symptoms": ["Pérdida del olfato", "Trastornos del sueño"],
+ "treatment": "El tratamiento de la enfermedad de Parkinson generalmente implica el uso de fármacos dopaminérgicos para aumentar los niveles de dopamina en el cerebro y mejorar los síntomas motores, así como terapia física para mantener la movilidad y la función musculoesquelética.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la enfermedad de Parkinson y mejorar la calidad de vida del paciente, aunque no detiene la progresión de la enfermedad.",
+ "treatment_mechanism": "Los fármacos dopaminérgicos actúan aumentando los niveles de dopamina en el cerebro para compensar la deficiencia asociada con la enfermedad de Parkinson. La terapia física puede ayudar a mantener la movilidad y la función musculoesquelética, reduciendo así la discapacidad asociada con la enfermedad."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Esclerosis múltiple",
+ "treatment": "Corticosteroides, medicamentos inmunomoduladores"
+ },
+ {
+ "diagnosis": "Enfermedad de Alzheimer",
+ "treatment": "Inhibidores de la colinesterasa, memantina"
+ }
+ ]
+ },
+ {
+ "name": "Laura Díaz",
+ "age": 40,
+ "gender": "Femenino",
+ "occupation": "Médica",
+ "symptoms": "Ha experimentado fatiga extrema, debilidad muscular y palidez en la piel. También ha notado mareos y dificultad para respirar, especialmente durante la actividad física.",
+ "diagnosis": "Anemia por deficiencia de hierro",
+ "treatment": "Suplementos de hierro, cambios en la dieta",
+ "pathology_description": {
+ "name": "Anemia por deficiencia de hierro",
+ "etiology": "La anemia por deficiencia de hierro es una afección en la que el cuerpo no tiene suficiente hierro para producir hemoglobina, lo que puede resultar en una disminución de los glóbulos rojos y la capacidad de transporte de oxígeno.",
+ "common_symptoms": ["Fatiga", "Debilidad muscular", "Palidez"],
+ "rare_symptoms": ["Uñas quebradizas", "Lengua lisa"],
+ "treatment": "El tratamiento de la anemia por deficiencia de hierro generalmente implica suplementos de hierro para restablecer los niveles de hierro en el cuerpo, así como cambios en la dieta para incluir alimentos ricos en hierro y mejorar la absorción de hierro.",
+ "treatment_effect": "El tratamiento puede ayudar a corregir la deficiencia de hierro y aumentar los niveles de hemoglobina en la sangre, aliviando así los síntomas de la anemia y mejorando la salud general del paciente.",
+ "treatment_mechanism": "Los suplementos de hierro aumentan los niveles de hierro en el cuerpo, lo que permite la producción de hemoglobina y glóbulos rojos. Los cambios en la dieta pueden mejorar la absorción de hierro y garantizar una ingesta adecuada de nutrientes esenciales."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Fatiga crónica",
+ "treatment": "Manejo del estrés, ejercicio moderado"
+ },
+ {
+ "diagnosis": "Hipotiroidismo",
+ "treatment": "Hormona tiroidea sintética, cambios en la dieta"
+ }
+ ]
+ },
+ {
+ "name": "Pablo García",
+ "age": 45,
+ "gender": "Masculino",
+ "occupation": "Chef",
+ "symptoms": "Ha experimentado dolor abdominal intenso y persistente, especialmente después de comer alimentos grasos. También ha notado ictericia, piel y ojos amarillos.",
+ "diagnosis": "Pancreatitis aguda",
+ "treatment": "Hospitalización, ayuno, analgésicos",
+ "pathology_description": {
+ "name": "Pancreatitis aguda",
+ "etiology": "La pancreatitis aguda es una inflamación aguda del páncreas que puede ser causada por cálculos biliares, consumo excesivo de alcohol, infecciones u otras afecciones médicas.",
+ "common_symptoms": ["Dolor abdominal", "Náuseas", "Vómitos"],
+ "rare_symptoms": ["Ictericia", "Fiebre"],
+ "treatment": "El tratamiento de la pancreatitis aguda generalmente implica hospitalización para el manejo del dolor y la hidratación, ayuno para permitir que el páncreas descanse y se recupere, y analgésicos para aliviar el dolor.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas de la pancreatitis aguda y prevenir complicaciones graves, como la necrosis pancreática o la insuficiencia orgánica.",
+ "treatment_mechanism": "El ayuno permite que el páncreas descanse y se recupere, reduciendo así la inflamación y el dolor. Los analgésicos ayudan a controlar el dolor asociado con la pancreatitis."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Gastritis",
+ "treatment": "Antiácidos, dieta blanda"
+ },
+ {
+ "diagnosis": "Úlcera péptica",
+ "treatment": "Inhibidores de la bomba de protones (IBP), antibióticos"
+ }
+ ]
+ },
+ {
+ "name": "Ana Sánchez",
+ "age": 30,
+ "gender": "Femenino",
+ "occupation": "Profesora de yoga",
+ "symptoms": "Ha experimentado dolor e hinchazón en las articulaciones, especialmente en las manos y las rodillas. También ha notado enrojecimiento y calor en las articulaciones afectadas.",
+ "diagnosis": "Artritis séptica",
+ "treatment": "Antibióticos intravenosos, drenaje articular",
+ "pathology_description": {
+ "name": "Artritis séptica",
+ "etiology": "La artritis séptica es una infección bacteriana de una articulación que puede ocurrir como resultado de la diseminación de bacterias a través del torrente sanguíneo, una lesión penetrante o una cirugía.",
+ "common_symptoms": ["Dolor articular", "Hinchazón", "Enrojecimiento"],
+ "rare_symptoms": ["Fiebre", "Rigidez articular"],
+ "treatment": "El tratamiento de la artritis séptica generalmente implica el uso de antibióticos intravenosos para eliminar la infección y el drenaje articular para eliminar el líquido infectado de la articulación.",
+ "treatment_effect": "El tratamiento puede ayudar a eliminar la infección y prevenir daños permanentes en la articulación, aunque la recuperación completa puede llevar tiempo y requiere rehabilitación.",
+ "treatment_mechanism": "Los antibióticos intravenosos actúan directamente sobre las bacterias causantes de la infección, eliminándolas del cuerpo. El drenaje articular permite eliminar el líquido infectado de la articulación, lo que ayuda a reducir la inflamación y aliviar los síntomas."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Fármacos antirreumáticos modificadores de la enfermedad (FARME), terapia física"
+ },
+ {
+ "diagnosis": "Gota",
+ "treatment": "Alopurinol, antiinflamatorios no esteroideos (AINE)"
+ }
+ ]
+ },
+ {
+ "name": "Isabel Ramírez",
+ "age": 20,
+ "gender": "Femenino",
+ "occupation": "Estudiante universitaria",
+ "symptoms": "Ha experimentado dolor en el pecho y dificultad para respirar, especialmente durante la actividad física. También ha notado palpitaciones y mareos.",
+ "diagnosis": "Taquicardia supraventricular paroxística",
+ "treatment": "Maniobras vagales, medicamentos antiarrítmicos",
+ "pathology_description": {
+ "name": "Taquicardia supraventricular paroxística",
+ "etiology": "La taquicardia supraventricular paroxística es un trastorno del ritmo cardíaco que se caracteriza por episodios repentinos de ritmo cardíaco anormalmente rápido que comienzan y terminan abruptamente, a menudo sin causa aparente.",
+ "common_symptoms": ["Palpitaciones", "Dolor en el pecho", "Dificultad para respirar"],
+ "rare_symptoms": ["Mareos", "Síncope"],
+ "treatment": "El tratamiento de la taquicardia supraventricular paroxística generalmente implica maniobras vagales para interrumpir el ritmo cardíaco anormal y el uso de medicamentos antiarrítmicos para prevenir la recurrencia de los episodios.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los episodios de taquicardia supraventricular paroxística y mejorar la calidad de vida del paciente, aunque puede ser necesario un seguimiento continuo para ajustar el tratamiento según sea necesario.",
+ "treatment_mechanism": "Las maniobras vagales, como el masaje del seno carotídeo o la inmersión del rostro en agua fría, estimulan el nervio vago para reducir la frecuencia cardíaca. Los medicamentos antiarrítmicos actúan sobre el sistema eléctrico del corazón para regular el ritmo cardíaco."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Ansiedad",
+ "treatment": "Terapia cognitivo-conductual, medicamentos ansiolíticos"
+ },
+ {
+ "diagnosis": "Hipertiroidismo",
+ "treatment": "Medicamentos antitiroideos, yodo radiactivo"
+ }
+ ]
+ },
+ {
+ "name": "Francisco Martínez",
+ "age": 60,
+ "gender": "Masculino",
+ "occupation": "Contador",
+ "symptoms": "Ha experimentado dolor en el pecho repentino y opresivo que se irradia hacia el brazo izquierdo. También ha sentido dificultad para respirar y sudoración profusa.",
+ "diagnosis": "Angina de pecho",
+ "treatment": "Nitroglicerina, cambios en el estilo de vida",
+ "pathology_description": {
+ "name": "Angina de pecho",
+ "etiology": "La angina de pecho es un síntoma de enfermedad coronaria que se caracteriza por dolor o malestar en el pecho debido a la falta de oxígeno en el músculo cardíaco, generalmente causada por la obstrucción parcial de las arterias coronarias.",
+ "common_symptoms": ["Dolor en el pecho", "Opresión", "Dificultad para respirar"],
+ "rare_symptoms": ["Náuseas", "Vómitos"],
+ "treatment": "El tratamiento de la angina de pecho generalmente implica el uso de nitroglicerina para aliviar el dolor agudo, así como cambios en el estilo de vida para reducir los factores de riesgo cardiovasculares, como la dieta alta en grasas y el sedentarismo.",
+ "treatment_effect": "El tratamiento puede ayudar a controlar los síntomas de la angina de pecho y reducir el riesgo de complicaciones graves, como el infarto de miocardio, aunque puede ser necesario un seguimiento continuo y ajustes en el tratamiento según sea necesario.",
+ "treatment_mechanism": "La nitroglicerina dilata los vasos sanguíneos coronarios, mejorando así el flujo sanguíneo al músculo cardíaco y aliviando el dolor. Los cambios en el estilo de vida, como seguir una dieta saludable y hacer ejercicio regularmente, pueden reducir los factores de riesgo cardiovasculares y prevenir futuros episodios."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Dolor muscular",
+ "treatment": "Analgésicos, reposo"
+ },
+ {
+ "diagnosis": "Neumonía",
+ "treatment": "Antibióticos, reposo en cama"
+ }
+ ]
+ }
+ ]
+}
+ [
+ {
+ "name": "Ana López",
+ "age": 35,
+ "gender": "Femenino",
+ "occupation": "Abogada",
+ "symptoms": "Ha experimentado hinchazón y dolor en sus articulaciones, especialmente en las manos y los pies. Además, ha notado rigidez en las mañanas que dura varias horas. Últimamente se siente muy cansada y fatigada, incluso después de descansar lo suficiente.",
+ "diagnosis": "Artritis reumatoide",
+ "treatment": "Fármacos antirreumáticos modificadores de la enfermedad (FARME), terapia física",
+ "pathology_description": {
+ "name": "Artritis reumatoide",
+ "etiology": "La artritis reumatoide es una enfermedad autoinmune que causa inflamación crónica en las articulaciones, resultando en dolor, hinchazón y rigidez.",
+ "common_symptoms": ["Dolor en las articulaciones", "Hinchazón", "Rigidez matutina"],
+ "rare_symptoms": ["Fatiga crónica", "Fiebre"],
+ "treatment": "El tratamiento de la artritis reumatoide generalmente implica el uso de fármacos antirreumáticos modificadores de la enfermedad (FARME) para controlar la inflamación y prevenir el daño articular, así como la terapia física para mejorar la movilidad y fortalecer los músculos.",
+ "treatment_effect": "El tratamiento puede ayudar a reducir los síntomas de la artritis reumatoide, mejorar la función articular y prevenir la progresión de la enfermedad, aunque puede ser necesario un seguimiento continuo y ajustes en el tratamiento según sea necesario.",
+ "treatment_mechanism": "Los FARME actúan sobre el sistema inmunológico para reducir la inflamación en las articulaciones, mientras que la terapia física ayuda a mejorar la movilidad y fortalecer los músculos, lo que puede reducir el dolor y mejorar la calidad de vida del paciente."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Osteoartritis",
+ "treatment": "Analgésicos, terapia ocupacional"
+ },
+ {
+ "diagnosis": "Fibromialgia",
+ "treatment": "Antidepresivos, ejercicio aeróbico"
+ }
+ ]
+ },
+ {
+ "name": "Laura Gómez",
+ "age": 28,
+ "gender": "Femenino",
+ "occupation": "Diseñadora gráfica",
+ "symptoms": "Ha experimentado episodios recurrentes de fatiga extrema que duran semanas o meses. Además, ha notado dolores musculares y articulares generalizados, así como dificultad para concentrarse y recordar cosas.",
+ "diagnosis": "Síndrome de fatiga crónica",
+ "treatment": "Terapia cognitivo-conductual, ejercicio gradual",
+ "pathology_description": {
+ "name": "Síndrome de fatiga crónica",
+ "etiology": "La causa exacta del síndrome de fatiga crónica no se comprende completamente, pero se cree que puede ser el resultado de una combinación de factores, incluidas infecciones virales, trastornos del sistema inmunológico y factores genéticos.",
+ "common_symptoms": ["Fatiga extrema", "Dolores musculares y articulares", "Dificultad para concentrarse"],
+ "rare_symptoms": ["Dolor de cabeza crónico", "Sensibilidad a la luz"],
+ "treatment": "El tratamiento del síndrome de fatiga crónica generalmente implica terapia cognitivo-conductual para abordar los pensamientos y comportamientos relacionados con la enfermedad, así como un programa de ejercicio gradual para mejorar la resistencia y reducir la fatiga.",
+ "treatment_effect": "El tratamiento puede ayudar a mejorar la calidad de vida del paciente al reducir la gravedad de los síntomas y aumentar la capacidad funcional, aunque puede llevar tiempo encontrar el enfoque de tratamiento adecuado para cada individuo.",
+ "treatment_mechanism": "La terapia cognitivo-conductual ayuda al paciente a manejar los pensamientos y comportamientos relacionados con la enfermedad, lo que puede mejorar la percepción de la fatiga y reducir el impacto en la vida diaria. El ejercicio gradual ayuda a mejorar la resistencia y la función física, lo que puede reducir la fatiga y aumentar la energía."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Depresión",
+ "treatment": "Antidepresivos, psicoterapia"
+ },
+ {
+ "diagnosis": "Fibromialgia",
+ "treatment": "Antidepresivos, ejercicio aeróbico"
+ }
+ ]
+ },
+ {
+ "name": "Juan Martín",
+ "age": 45,
+ "gender": "Masculino",
+ "occupation": "Electricista",
+ "symptoms": "Ha notado un aumento repentino en la frecuencia urinaria, especialmente durante la noche. Además, ha experimentado urgencia urinaria y sensación de vaciado incompleto de la vejiga.",
+ "diagnosis": "Hiperplasia prostática benigna",
+ "treatment": "Alfa bloqueantes, inhibidores de la 5-alfa-reductasa",
+ "pathology_description": {
+ "name": "Hiperplasia prostática benigna",
+ "etiology": "La hiperplasia prostática benigna es un agrandamiento no canceroso de la próstata que puede causar síntomas urinarios, como aumento de la frecuencia urinaria, urgencia urinaria y dificultad para orinar.",
+ "common_symptoms": ["Aumento de la frecuencia urinaria", "Urgencia urinaria", "Dificultad para orinar"],
+ "rare_symptoms": ["Goteo después de orinar", "Sensación de vaciado incompleto de la vejiga"],
+ "treatment": "El tratamiento de la hiperplasia prostática benigna puede incluir medicamentos para relajar los músculos de la próstata y mejorar el flujo urinario, así como inhibidores de la 5-alfa-reductasa para reducir el tamaño de la próstata.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas urinarios asociados con la hiperplasia prostática benigna y mejorar la calidad de vida del paciente, aunque puede ser necesario un seguimiento continuo y ajustes en el tratamiento según sea necesario.",
+ "treatment_mechanism": "Los alfa bloqueantes relajan los músculos de la próstata y el cuello de la vejiga, lo que facilita la micción, mientras que los inhibidores de la 5-alfa-reductasa reducen el tamaño de la próstata al inhibir la conversión de testosterona en dihidrotestosterona, una hormona que estimula el crecimiento de la próstata."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Infección del tracto urinario",
+ "treatment": "Antibióticos, aumentar la ingesta de líquidos"
+ },
+ {
+ "diagnosis": "Cistitis",
+ "treatment": "Antibióticos, analgésicos"
+ }
+ ]
+ },
+ {
+ "name": "María Fernández",
+ "age": 55,
+ "gender": "Femenino",
+ "occupation": "Médica",
+ "symptoms": "Ha notado manchas oscuras en su piel, especialmente en la cara y las manos. Además, ha experimentado una sensación de calor repentino, sudoración excesiva y dificultad para dormir por la noche.",
+ "diagnosis": "Menopausia",
+ "treatment": "Terapia hormonal sustitutiva, cambios en el estilo de vida",
+ "pathology_description": {
+ "name": "Menopausia",
+ "etiology": "La menopausia es el cese natural de la función menstrual y reproductiva en las mujeres, generalmente entre los 45 y 55 años de edad, y está asociada con cambios hormonales, como la disminución de los niveles de estrógeno.",
+ "common_symptoms": ["Sofocos", "Sudoración nocturna", "Cambios en la menstruación"],
+ "rare_symptoms": ["Insomnio", "Sequedad vaginal"],
+ "treatment": "El tratamiento de los síntomas de la menopausia puede incluir terapia hormonal sustitutiva para reemplazar las hormonas que el cuerpo deja de producir, así como cambios en el estilo de vida, como una dieta saludable y ejercicio regular.",
+ "treatment_effect": "El tratamiento puede ayudar a aliviar los síntomas de la menopausia, como los sofocos y la sequedad vaginal, así como reducir el riesgo de complicaciones a largo plazo, como la osteoporosis.",
+ "treatment_mechanism": "La terapia hormonal sustitutiva reemplaza las hormonas que el cuerpo deja de producir durante la menopausia, lo que puede aliviar los síntomas y mejorar la calidad de vida del paciente. Los cambios en el estilo de vida, como la dieta y el ejercicio, pueden ayudar a reducir los síntomas y mejorar la salud general."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Tiroiditis",
+ "treatment": "Medicamentos para la tiroides, antiinflamatorios"
+ },
+ {
+ "diagnosis": "Hipertiroidismo",
+ "treatment": "Medicamentos antitiroideos, yodo radiactivo"
+ }
+ ]
+ },
+ {
+ "name": "Pedro Martínez",
+ "age": 40,
+ "gender": "Masculino",
+ "occupation": "Carpintero",
+ "symptoms": "Ha notado una protuberancia en su cuello que parece estar creciendo lentamente. Además, ha experimentado cambios en su voz, como ronquera y dificultad para tragar alimentos sólidos.",
+ "diagnosis": "Nódulo tiroideo",
+ "treatment": "Observación, cirugía si es necesario",
+ "pathology_description": {
+ "name": "Nódulo tiroideo",
+ "etiology": "Los nódulos tiroideos pueden ser causados por una variedad de factores, incluyendo enfermedades benignas o malignas de la glándula tiroides, deficiencia de yodo, o simplemente representar un crecimiento benigno del tejido tiroideo.",
+ "common_symptoms": ["Protuberancia en el cuello", "Cambios en la voz"],
+ "rare_symptoms": ["Dificultad para tragar", "Dolor en el cuello"],
+ "treatment": "El tratamiento de un nódulo tiroideo depende de varios factores, incluido el tamaño y la apariencia del nódulo, así como la presencia de síntomas. En muchos casos, se recomienda la observación periódica para monitorear cualquier cambio en el tamaño o la función de la glándula tiroides. Si el nódulo causa síntomas significativos o se sospecha que es maligno, puede ser necesaria una biopsia o cirugía para extirparlo.",
+ "treatment_effect": "El tratamiento de un nódulo tiroideo puede variar según la causa y la gravedad del problema. En algunos casos, la observación periódica puede ser suficiente, mientras que en otros puede ser necesario un tratamiento más agresivo, como la cirugía.",
+ "treatment_mechanism": "La observación periódica implica realizar exámenes de seguimiento regulares, como ecografías o biopsias, para monitorear cualquier cambio en el tamaño o la apariencia del nódulo. La cirugía puede ser necesaria para extirpar nódulos grandes o sintomáticos, especialmente si se sospecha que son malignos."
+ },
+ "incorrect_diagnoses": [
+ {
+ "diagnosis": "Cáncer de tiroides",
+ "treatment": "Cirugía para extirpar la glándula tiroides, terapia de yodo radiactivo"
+ },
+ {
+ "diagnosis": "Bocio",
+ "treatment": "Medicamentos para la tiroides, yodo"
+ }
+ ]
+ }
+ ]
+}
+
+            "name": "María Pérez",
+            "age": 45,
+            "gender": "Femenino",
+            "occupation": "Profesora",
+            "symptoms": "Siente una presión en su cabeza que no la deja concentrarse en sus clases. A veces, cuando sube las escaleras, tiene que detenerse a mitad de camino porque su corazón late muy rápido y le falta el aire. Le gusta añadir sal extra a sus comidas, a pesar de saber que no debería.",
+            "diagnosis": "Hipertensión arterial",
+            "treatment": "Medicamentos antihipertensivos, cambios en el estilo de vida",
+            "pathology_description": {
+                "name": "Hipertensión arterial",
+                "etiology": "La hipertensión arterial puede ser causada por varios factores, incluyendo el estrés, una dieta alta en sodio, la falta de ejercicio y factores genéticos.",
+                "common_symptoms": ["Presión arterial alta", "Dolor de cabeza", "Fatiga"],
+                "rare_symptoms": ["Dificultad para respirar", "Sangrado nasal frecuente"],
+                "treatment": "El tratamiento suele implicar medicamentos para reducir la presión arterial y cambios en el estilo de vida, como una dieta baja en sodio y ejercicio regular.",
+                "treatment_effect": "Reduce la presión arterial y disminuye el riesgo de complicaciones cardiovasculares.",
+                "treatment_mechanism": "Los medicamentos dilatan los vasos sanguíneos y reducen la resistencia vascular."
+            },
+            "incorrect_diagnoses": [
+                {"diagnosis": "Migraña", "treatment": "Analgésicos y cambios en el estilo de vida"},
+                {"diagnosis": "Insomnio", "treatment": "Terapia cognitivo-conductual y medicamentos hipnóticos"}
+            ]
+        }
+
+        self.score = 0
+        self.lives = 3
+
+        self.case_label = tk.Label(self.root, text=self.case_data["symptoms"])
+        self.case_label.pack()
+
+        self.option_buttons = []
+        self.create_options()
+
+        self.timer = None
+        self.time_left = 45
+
+        self.create_timer()
+
+        self.next_case_button = tk.Button(self.root, text="Listo para el próximo paciente", command=self.next_case)
+        self.next_case_button.pack(pady=20)
+
+    def create_options(self):
+        options = [self.case_data["diagnosis"], self.case_data["incorrect_diagnoses"][0]["diagnosis"], self.case_data["incorrect_diagnoses"][1]["diagnosis"]]
+        treatments = [self.case_data["treatment"], self.case_data["incorrect_diagnoses"][0]["treatment"], self.case_data["incorrect_diagnoses"][1]["treatment"]]
+
+        for i in range(3):
+            button = tk.Button(self.root, text=f"Diagnóstico: {options[i]}\nTratamiento: {treatments[i]}", command=lambda i=i: self.check_answer(i))
+            button.pack(pady=10)
+            self.option_buttons.append(button)
+
+    def check_answer(self, index):
+        if index == 0:
+            self.show_correct_answer()
+        else:
+            self.lives -= 1
+            self.option_buttons[index].config(text="¡Incorrecto!", state=tk.DISABLED)
+            if self.lives == 0:
+                self.game_over()
+
+    def show_correct_answer(self):
+        self.score += 1
+        self.option_buttons[0].config(text="¡Correcto!", state=tk.DISABLED)
+        messagebox.showinfo("Doctor Casa", "Felicidades, Doctor Casa, salvaste a tu paciente.\nAquí está la información sobre la patología:")
+        messagebox.showinfo("Patología", f"Nombre: {self.case_data['pathology_description']['name']}\nEtiología: {self.case_data['pathology_description']['etiology']}\nSíntomas comunes: {', '.join(self.case_data['pathology_description']['common_symptoms'])}\nSíntomas raros: {', '.join(self.case_data['pathology_description']['rare_symptoms'])}\nTratamiento: {self.case_data['pathology_description']['treatment']}\nEfecto del tratamiento: {self.case_data['pathology_description']['treatment_effect']}\nMecanismo del tratamiento: {self.case_data['pathology_description']['treatment_mechanism']}")
+
+    def create_timer(self):
+        self.timer = tk.Label(self.root, text=f"Tiempo restante: {self.time_left}")
+        self.timer.pack()
+        self.timer_running = True
+        self.timer_thread = self.root.after(1000, self.update_timer)
+
+    def update_timer(self):
+        if self.timer_running and self.time_left > 0:
+            self.time_left -= 1
+            self.timer.config(text=f"Tiempo restante: {self.time_left}")
+            self.timer_thread = self.root.after(1000, self.update_timer)
+        else:
+            self.timer_running = False
+            self.game_over()
+
+    def game_over(self):
+        self.timer.config(text="¡Se acabó el tiempo!")
+        messagebox.showwarning("Doctor Casa", "Dejaste morir a tu paciente
